@@ -1,0 +1,5 @@
+.github/
+/coverage
+*.json
+CHANGELOG.md
+*.yml

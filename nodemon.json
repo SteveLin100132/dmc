@@ -1,0 +1,6 @@
+{
+  "ignore": [
+    "backup/*",
+    "storage/*"
+  ]
+}

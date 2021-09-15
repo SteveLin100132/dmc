@@ -1,0 +1,44 @@
+{
+    "env": {
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": "off",
+        "no-useless-constructor": "off",
+        "camelcase": "warn",
+        "indent": "off",
+        "brace-style": "off",
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "comma-dangle": [
+            0,
+            "only-multiline",
+            1,
+            "only-multiline",
+            2,
+            "only-multiline",
+            3,
+            "only-multiline",
+            4,
+            "error"
+        ]
+    }
+}

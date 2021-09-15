@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.tslint": true
+  },
+  "prettier.bracketSpacing": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": true,
+  "prettier.printWidth": 80,
+  "prettier.trailingComma": "es5",
+  "prettier.useTabs": false,
+  "prettier.tabWidth": 2,
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+}

@@ -1,0 +1,7 @@
+/backup
+/node_modules
+/coverage
+/logs
+/samples
+/mocks/data
+/storage

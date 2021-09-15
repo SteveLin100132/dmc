@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "lib": [
+      "es6"
+    ],
+    "paths": {
+      "src/*": ["src/*"],
+    },
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": [
+    "src",
+    "src/*",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "node_modules/**",
+    "node_modules/**/*",
+    "**/__tests__/*"
+  ]
+}
