@@ -9,6 +9,7 @@
  * @NOTE
  */
 
+export * from './composition';
 export * from './cron';
 export * from './kafka';
 export * from './mqtt';

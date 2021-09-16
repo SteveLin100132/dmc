@@ -30,6 +30,7 @@ npm i wistroni40-dmc --save
   - 建立 Kafka Consumer 轉接器
   - 建立 MQTT Consumer 轉接器
   - 建立 CRON Consumer 轉接器
+  - 建立複合式 Consumer 轉接器，可插入多個轉接器，介接多個數據來源
   - 建立 Consumer 資料解析策略
     - 建立 Kafka Confluent Avro 資料解析策略
     - 建立 Kafka JSON 資料解析策略
@@ -56,6 +57,7 @@ npm i wistroni40-dmc --save
 - [資料驅動範例](https://github.com/SteveLin100132/wistroni40-dmc/blob/master/examples/data-driven)
 - [混合驅動範例](https://github.com/SteveLin100132/wistroni40-dmc/blob/master/examples/mixin-driven)
 - [排程資料報警範例](https://github.com/SteveLin100132/wistroni40-dmc/blob/master/examples/cron-consumer)
+- [複合式資料來源報警範例](https://github.com/SteveLin100132/wistroni40-dmc/blob/master/examples/composition-consumer)
 
 # Alarm API
 
@@ -646,6 +648,67 @@ const executor = new ElasticsearchSearchExecutor(
 // CRON 轉接器
 const cron = '*/5 * * * * *';
 const consumerAdapter = new CronConsumerAdapter(cron, executor, false);
+
+// 訂閱資料
+consumerAdapter.consume().subscribe(res => console.log(res));
+```
+
+## Composition Adapter
+
+支持插入多個資料消費者轉接器，讓資料可以重多個來源獲取
+
+**CompositionConsumerAdapter**
+
+### 方法說明
+
+添加資料消費者轉接器
+
+#### addConsumer
+
+| 參數     |          型別           | 說明                                               |
+| -------- | :---------------------: | :------------------------------------------------- |
+| name     |         string          | 資料消費者名稱，讓獲取資料時，可以知道其來源自何處 |
+| consumer |     ConsumerAdapter     | 資料消費者轉接器                                   |
+| resolver | ConsumerResolveStrategy | 消費資料解析策略                                   |
+| 回傳值   |          this           | 回傳物件本身                                       |
+
+#### keyBy
+
+設定鍵值合成方法
+
+| 參數   |        型別         | 說明         |
+| ------ | :-----------------: | :----------- |
+| keyFn  | (data: T) => string | 鍵值合成方法 |
+| 回傳值 |        this         | 回傳物件本身 |
+
+#### process
+
+實作資料合成方法
+
+| 參數    |                           型別                            | 說明         |
+| ------- | :-------------------------------------------------------: | :----------- |
+| process | (name: string, cache: D &#124; undefined, data: any) => D | 資料合成方法 |
+| 回傳值  |                           this                            | 回傳物件本身 |
+
+```typescript
+// 資料來源1
+const client1 = mqtt.connect('mqtt://localhost:1883');
+const topic1 = 'your/mqtt/topic1/#';
+const consumer1 = new MqttConsumerAdapter(client1, topic1);
+const resolver1 = new MqttPayloadStrategy();
+
+// 資料來源2
+const client2 = mqtt.connect('mqtt://localhost:1883');
+const topic2 = 'your/mqtt/topic2/#';
+const consumer2 = new MqttConsumerAdapter(client2, topic2);
+const resolver2 = new MqttPayloadStrategy();
+
+// 複合式轉接器
+const consumerAdapter = new CompositionConsumerAdapter()
+  .addConsumer('source1', consumer1, resolver1)
+  .addConsumer('source2', consumer2, resolver2)
+  .keyBy(data => `${data.field1}.${data.field2}`)
+  .process((n, c, d) => /** TODO */);
 
 // 訂閱資料
 consumerAdapter.consume().subscribe(res => console.log(res));
