@@ -113,6 +113,50 @@ export class MixinDrivenService extends AlarmTemplate<
   }
 
   /**
+   * 取得等級 4 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 4 報警等級狀態
+   */
+  public level4(entity: Enviroment): AlarmState {
+    return new Level4State();
+  }
+
+  /**
+   * 取得等級 3 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 3 報警等級狀態
+   */
+  public level3(entity: Enviroment): AlarmState {
+    return new Level3State();
+  }
+
+  /**
+   * 取得等級 2 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 2 報警等級狀態
+   */
+  public level2(entity: Enviroment): AlarmState {
+    return new Level2State();
+  }
+
+  /**
+   * 取得等級 1 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 1 報警等級狀態
+   */
+  public level1(entity: Enviroment): AlarmState {
+    return new Level1State();
+  }
+
+  /**
    * 打包報警發送數據
    *
    * @method public

@@ -22,7 +22,6 @@ import {
   MixinTriggerStrategy,
   MqttConsumerAdapter,
   MqttPayloadStrategy,
-  StateRecord,
 } from './../../lib';
 import { Composition, CompositionEntity, Enviroment } from './models';
 import {
@@ -48,15 +47,6 @@ export class CompositionConsumerService extends AlarmTemplate<
    * 報警發送位置
    */
   protected publishedLocation: string;
-  /**
-   * 報警等級狀態表
-   */
-  protected stateRecord: StateRecord = {
-    L4: new Level4State(),
-    L3: new Level3State(),
-    L2: new Level2State(),
-    L1: new Level1State(),
-  };
 
   /**
    * @param id 報警服務 ID
@@ -124,6 +114,50 @@ export class CompositionConsumerService extends AlarmTemplate<
    */
   public defaultLevel(entity: Composition): AlarmState {
     return new NoneState();
+  }
+
+  /**
+   * 取得等級 4 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 4 報警等級狀態
+   */
+  public level4(entity: Composition): AlarmState {
+    return new Level4State();
+  }
+
+  /**
+   * 取得等級 3 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 3 報警等級狀態
+   */
+  public level3(entity: Composition): AlarmState {
+    return new Level3State();
+  }
+
+  /**
+   * 取得等級 2 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 2 報警等級狀態
+   */
+  public level2(entity: Composition): AlarmState {
+    return new Level2State();
+  }
+
+  /**
+   * 取得等級 1 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 1 報警等級狀態
+   */
+  public level1(entity: Composition): AlarmState {
+    return new Level1State();
   }
 
   /**

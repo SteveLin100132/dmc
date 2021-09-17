@@ -34,11 +34,6 @@ import { AlarmProducer } from './../producer';
 import { AlarmState } from './../state';
 
 /**
- * 報警等級狀態表型別
- */
-export type StateRecord = Record<Exclude<AlarmLevel, null>, AlarmState>;
-
-/**
  * 報警範本
  *
  * @template S 消費的原始資料
@@ -60,10 +55,6 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
    * 報警觸發器
    */
   protected abstract alarmTrigger: AlarmTriggerStrategy<T>;
-  /**
-   * 報警等級狀態表
-   */
-  protected abstract stateRecord: StateRecord;
   /**
    * 報警發送位置
    */
@@ -98,10 +89,7 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
         if (raw) {
           const { level, timestamp, entity } = raw;
           const key = this.keyBy(entity);
-          const state =
-            level === null
-              ? this.defaultLevel(entity)
-              : this.stateRecord[level];
+          const state = this.getAlarmStateByLevel(level, entity);
           const alarm = new Alarm(entity, state, this, key);
           alarm.timestamp = timestamp;
           this.alarmTrigger.set(key, entity, alarm);
@@ -110,6 +98,30 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
         return file;
       }),
     );
+  }
+
+  /**
+   * 透過等級取得對應等級的報警狀態
+   *
+   * @method private
+   * @param level 報警等級
+   * @param entity 資料實體
+   * @return 回傳對應等級的報警狀態
+   */
+  private getAlarmStateByLevel(level: AlarmLevel, entity: T): AlarmState {
+    if (level === null) {
+      return this.defaultLevel(entity);
+    } else if (level === 'L4') {
+      return this.level4(entity);
+    } else if (level === 'L3') {
+      return this.level3(entity);
+    } else if (level === 'L2') {
+      return this.level2(entity);
+    } else if (level === 'L1') {
+      return this.level1(entity);
+    } else {
+      throw new Error(`unknown level: ${level}`);
+    }
   }
 
   /**
@@ -166,6 +178,42 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
    * @return 回傳預設的報警等級狀態
    */
   public abstract defaultLevel(entity: T): AlarmState;
+
+  /**
+   * 取得等級 4 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 4 報警等級狀態
+   */
+  public abstract level4(entity: T): AlarmState;
+
+  /**
+   * 取得等級 3 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 3 報警等級狀態
+   */
+  public abstract level3(entity: T): AlarmState;
+
+  /**
+   * 取得等級 2 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 2 報警等級狀態
+   */
+  public abstract level2(entity: T): AlarmState;
+
+  /**
+   * 取得等級 1 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 1 報警等級狀態
+   */
+  public abstract level1(entity: T): AlarmState;
 
   /**
    * 保存報警資料

@@ -12,13 +12,9 @@ import { Observable } from 'rxjs';
 import { AlarmConfig } from '../models/config';
 import { AlarmTriggerStrategy, Consumer, Log4js, Producer } from './../../../core';
 import { Alarm } from './../alarm';
-import { AlarmLevel, AlarmModel, AlarmPayload } from './../models';
+import { AlarmModel, AlarmPayload } from './../models';
 import { AlarmProducer } from './../producer';
 import { AlarmState } from './../state';
-/**
- * 報警等級狀態表型別
- */
-export declare type StateRecord = Record<Exclude<AlarmLevel, null>, AlarmState>;
 /**
  * 報警範本
  *
@@ -42,10 +38,6 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      */
     protected abstract alarmTrigger: AlarmTriggerStrategy<T>;
     /**
-     * 報警等級狀態表
-     */
-    protected abstract stateRecord: StateRecord;
-    /**
      * 報警發送位置
      */
     protected abstract publishedLocation: string;
@@ -64,6 +56,15 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      * @method private
      */
     private recover;
+    /**
+     * 透過等級取得對應等級的報警狀態
+     *
+     * @method private
+     * @param level 報警等級
+     * @param entity 資料實體
+     * @return 回傳對應等級的報警狀態
+     */
+    private getAlarmStateByLevel;
     /**
      * 初始化
      *
@@ -109,6 +110,38 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      * @return 回傳預設的報警等級狀態
      */
     abstract defaultLevel(entity: T): AlarmState;
+    /**
+     * 取得等級 4 報警等級狀態
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳等級 4 報警等級狀態
+     */
+    abstract level4(entity: T): AlarmState;
+    /**
+     * 取得等級 3 報警等級狀態
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳等級 3 報警等級狀態
+     */
+    abstract level3(entity: T): AlarmState;
+    /**
+     * 取得等級 2 報警等級狀態
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳等級 2 報警等級狀態
+     */
+    abstract level2(entity: T): AlarmState;
+    /**
+     * 取得等級 1 報警等級狀態
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳等級 1 報警等級狀態
+     */
+    abstract level1(entity: T): AlarmState;
     /**
      * 保存報警資料
      *
