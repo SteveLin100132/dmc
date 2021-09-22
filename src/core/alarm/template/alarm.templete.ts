@@ -92,7 +92,7 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
           const state = this.getAlarmStateByLevel(level, entity);
           const alarm = new Alarm(entity, state, this, key);
           alarm.timestamp = timestamp;
-          this.alarmTrigger.set(key, entity, alarm);
+          this.alarmTrigger.set(key, entity, alarm, false);
           this.logger.debug(`recover ${key} to alarm level ${level}`);
         }
         return file;

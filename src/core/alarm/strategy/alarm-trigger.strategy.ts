@@ -53,8 +53,14 @@ export abstract class AlarmTriggerStrategy<D = any> {
    * @param key          報警 Key 值
    * @param entity       報警資料
    * @param defaultLevel 預設報警狀態管理者
+   * @param trigger      觸發報警更新
    */
-  public set(key: string, entity: D, defaultLevel: Alarm<D>): void {
+  public set(
+    key: string,
+    entity: D,
+    defaultLevel: Alarm<D>,
+    trigger = true,
+  ): void {
     const alarm = this.get(key);
     if (alarm) {
       alarm.updateData(entity);
@@ -62,7 +68,9 @@ export abstract class AlarmTriggerStrategy<D = any> {
     } else {
       this.alarm.set(key, defaultLevel);
     }
-    this.subject.next([key, entity]);
+    if (trigger) {
+      this.subject.next([key, entity]);
+    }
   }
 
   /**
