@@ -92,7 +92,7 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
           const state = this.getAlarmStateByLevel(level, entity);
           const alarm = new Alarm(entity, state, this, key);
           alarm.timestamp = timestamp;
-          this.alarmTrigger.set(key, entity, alarm, false);
+          this.alarmTrigger.init(key, alarm);
           this.logger.debug(`recover ${key} to alarm level ${level}`);
         }
         return file;
@@ -224,12 +224,7 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
   public storeAlarmEntity(entity: T): void {
     // 保存報警資料
     const key = this.keyBy(entity);
-    let alarm = this.alarmTrigger.get(key);
-    if (alarm) {
-      alarm.updateData(entity);
-    } else {
-      alarm = new Alarm(entity, this.defaultLevel(entity), this, key);
-    }
+    const alarm = new Alarm(entity, this.defaultLevel(entity), this, key);
     this.alarmTrigger.set(key, entity, alarm);
   }
 
@@ -271,6 +266,7 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
   public async consume(): Promise<void> {
     await this.init();
     await this.recover();
+    this.alarmTrigger.trigger();
     const consumer = await this.consumer();
     const consume$ = consumer.consume().pipe(
       // 解析消費後的資料

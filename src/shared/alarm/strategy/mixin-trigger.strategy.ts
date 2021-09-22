@@ -19,7 +19,7 @@ export class MixinTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
   /**
    * 排程
    */
-  private readonly _schedule: schedule.Job;
+  private _schedule?: schedule.Job;
   /**
    * 日誌
    */
@@ -30,9 +30,6 @@ export class MixinTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
    */
   constructor(private _cron: string) {
     super();
-    this._schedule = schedule.scheduleJob(this._cron, () => {
-      this.alarm.forEach(alarm => alarm.updateAlarm());
-    });
   }
 
   /**
@@ -41,6 +38,12 @@ export class MixinTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
    * @method public
    */
   public trigger(): void {
+    // 透過時間驅動
+    this._schedule = schedule.scheduleJob(this._cron, () => {
+      this.alarm.forEach(alarm => alarm.updateAlarm());
+    });
+
+    // 透過資料驅動
     this.subject.subscribe(async data => {
       const [key] = data;
       const alarm = this.alarm.get(key);

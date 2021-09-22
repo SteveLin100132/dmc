@@ -17,7 +17,7 @@ export declare class MixinTriggerStrategy<D = any> extends AlarmTriggerStrategy<
     /**
      * 排程
      */
-    private readonly _schedule;
+    private _schedule?;
     /**
      * 日誌
      */

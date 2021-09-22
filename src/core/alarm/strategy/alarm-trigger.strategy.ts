@@ -34,10 +34,7 @@ export abstract class AlarmTriggerStrategy<D = any> {
   /**
    * @param alarm 報警狀態管理者
    */
-  constructor(protected alarm = new Map<string, Alarm<D>>()) {
-    // 啟動觸發器
-    this.trigger();
-  }
+  constructor(protected alarm = new Map<string, Alarm<D>>()) {}
 
   /**
    * 觸發報警更新
@@ -47,20 +44,25 @@ export abstract class AlarmTriggerStrategy<D = any> {
   public abstract trigger(): void;
 
   /**
+   * 初始化報警狀態管理者
+   *
+   * @method public
+   * @param key          報警 Key 值
+   * @param defaultLevel 預設報警狀態管理者
+   */
+  public init(key: string, defaultLevel: Alarm<D>): void {
+    this.alarm.set(key, defaultLevel);
+  }
+
+  /**
    * 設定報警狀態管理者
    *
    * @method public
    * @param key          報警 Key 值
    * @param entity       報警資料
    * @param defaultLevel 預設報警狀態管理者
-   * @param trigger      觸發報警更新
    */
-  public set(
-    key: string,
-    entity: D,
-    defaultLevel: Alarm<D>,
-    trigger = true,
-  ): void {
+  public set(key: string, entity: D, defaultLevel: Alarm<D>): void {
     const alarm = this.get(key);
     if (alarm) {
       alarm.updateData(entity);
@@ -68,9 +70,7 @@ export abstract class AlarmTriggerStrategy<D = any> {
     } else {
       this.alarm.set(key, defaultLevel);
     }
-    if (trigger) {
-      this.subject.next([key, entity]);
-    }
+    this.subject.next([key, entity]);
   }
 
   /**

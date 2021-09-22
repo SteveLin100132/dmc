@@ -19,7 +19,7 @@ export class TimerTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
   /**
    * 排程
    */
-  private readonly _schedule: schedule.Job;
+  private _schedule?: schedule.Job;
   /**
    * 日誌
    */
@@ -30,7 +30,6 @@ export class TimerTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
    */
   constructor(private _cron: string) {
     super();
-    this._schedule = schedule.scheduleJob(this._cron, this.trigger.bind(this));
   }
 
   /**
@@ -39,6 +38,8 @@ export class TimerTriggerStrategy<D = any> extends AlarmTriggerStrategy<D> {
    * @method public
    */
   public trigger(): void {
-    this.alarm.forEach(alarm => alarm.updateAlarm());
+    this._schedule = schedule.scheduleJob(this._cron, () => {
+      this.alarm.forEach(alarm => alarm.updateAlarm());
+    });
   }
 }

@@ -39,15 +39,22 @@ export declare abstract class AlarmTriggerStrategy<D = any> {
      */
     abstract trigger(): void;
     /**
+     * 初始化報警狀態管理者
+     *
+     * @method public
+     * @param key          報警 Key 值
+     * @param defaultLevel 預設報警狀態管理者
+     */
+    init(key: string, defaultLevel: Alarm<D>): void;
+    /**
      * 設定報警狀態管理者
      *
      * @method public
      * @param key          報警 Key 值
      * @param entity       報警資料
      * @param defaultLevel 預設報警狀態管理者
-     * @param trigger      觸發報警更新
      */
-    set(key: string, entity: D, defaultLevel: Alarm<D>, trigger?: boolean): void;
+    set(key: string, entity: D, defaultLevel: Alarm<D>): void;
     /**
      * 取得報警狀態管理者
      *
