@@ -195,32 +195,6 @@ class AlarmService extends AlarmTemplate {
 }
 ```
 
-#### stateRecord
-
-報警等級狀態表，提供服務重新啟動時，可將過去的報警狀態復原
-
-| 型別        | 實作 |
-| ----------- | :--: |
-| StateRecord |  ✔️  |
-
-```typescript
-import { AlarmTemplate } from 'wistroni40-dmc';
-
-class AlarmService extends AlarmTemplate {
-  /**
-   * 報警等級狀態表
-   *
-   * @description 須提供 L4 ~ L1 各報警狀態的紀錄物件
-   */
-  protected stateRecord: StateRecord = {
-    L4: new Level4State(),
-    L3: new Level3State(),
-    L2: new Level2State(),
-    L1: new Level1State(),
-  };
-}
-```
-
 #### publishedLocation
 
 報警發送位置
@@ -413,6 +387,118 @@ class AlarmService extends AlarmTemplate {
    */
   public defaultLevel(entity: T): AlarmState {
     return new NoneState();
+  }
+}
+```
+
+#### level4()
+
+**實作:** ✔️
+
+取得`L4`報警等級狀態
+
+| 參數   |    型別     | 說明                   |
+| ------ | :---------: | :--------------------- |
+| entity | &#60;T&#62; | 資料實體               |
+| Return | AlarmState  | 回傳預設的報警等級狀態 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  /**
+   * 取得等級 4 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 4 報警等級狀態
+   */
+  public level4(entity: Enviroment): AlarmState {
+    return new Level4State();
+  }
+}
+```
+
+#### level3()
+
+**實作:** ✔️
+
+取得`L3`報警等級狀態
+
+| 參數   |    型別     | 說明                   |
+| ------ | :---------: | :--------------------- |
+| entity | &#60;T&#62; | 資料實體               |
+| Return | AlarmState  | 回傳預設的報警等級狀態 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  /**
+   * 取得等級 3 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 3 報警等級狀態
+   */
+  public level3(entity: Enviroment): AlarmState {
+    return new Level3State();
+  }
+}
+```
+
+#### level2()
+
+**實作:** ✔️
+
+取得`L2`報警等級狀態
+
+| 參數   |    型別     | 說明                   |
+| ------ | :---------: | :--------------------- |
+| entity | &#60;T&#62; | 資料實體               |
+| Return | AlarmState  | 回傳預設的報警等級狀態 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  /**
+   * 取得等級 2 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 2 報警等級狀態
+   */
+  public level2(entity: Enviroment): AlarmState {
+    return new Level2State();
+  }
+}
+```
+
+#### level1()
+
+**實作:** ✔️
+
+取得`L1`報警等級狀態
+
+| 參數   |    型別     | 說明                   |
+| ------ | :---------: | :--------------------- |
+| entity | &#60;T&#62; | 資料實體               |
+| Return | AlarmState  | 回傳預設的報警等級狀態 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  /**
+   * 取得等級 1 報警等級狀態
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳等級 1 報警等級狀態
+   */
+  public level1(entity: Enviroment): AlarmState {
+    return new Level1State();
   }
 }
 ```
