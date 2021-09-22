@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2021-09-22
+### Changed
+#### Alarm
+- 報警流程將初始化的步驟改為最優先，避免再啟動備援機制時，將報警的資料給覆蓋(若初始化時有將資料寫入報警數據當中)
+
 ## [1.0.3] - 2021-09-22
 ### Changed
 - 更新使用說明文檔

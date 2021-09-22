@@ -269,8 +269,8 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
    * @method public
    */
   public async consume(): Promise<void> {
-    await this.recover();
     await this.init();
+    await this.recover();
     const consumer = await this.consumer();
     const consume$ = consumer.consume().pipe(
       // 解析消費後的資料

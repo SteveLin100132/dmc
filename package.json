@@ -1,6 +1,6 @@
 {
   "name": "wistroni40-dmc",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "DMC Template",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

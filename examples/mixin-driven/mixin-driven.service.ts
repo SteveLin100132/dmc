@@ -22,7 +22,6 @@ import {
   MixinTriggerStrategy,
   MqttConsumerAdapter,
   MqttPayloadStrategy,
-  StateRecord,
 } from './../../lib';
 import { Enviroment } from './models';
 import {
@@ -48,15 +47,6 @@ export class MixinDrivenService extends AlarmTemplate<
    * 報警發送位置
    */
   protected publishedLocation: string;
-  /**
-   * 報警等級狀態表
-   */
-  protected stateRecord: StateRecord = {
-    L4: new Level4State(),
-    L3: new Level3State(),
-    L2: new Level2State(),
-    L1: new Level1State(),
-  };
 
   /**
    * @param id 報警服務 ID
