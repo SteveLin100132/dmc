@@ -125,6 +125,46 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
   }
 
   /**
+   * 保存報警資料
+   *
+   * @method public
+   * @param entity 資料實體
+   */
+  public storeAlarmEntity(entity: T): void {
+    // 保存報警資料
+    const key = this.keyBy(entity);
+    const alarm = new Alarm(entity, this.defaultLevel(entity), this, key);
+    this.alarmTrigger.set(key, entity, alarm);
+  }
+
+  /**
+   * 該報警資料是否存在
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳該報警資料是否存在
+   */
+  public isAlarmEntityExist(entity: T): boolean {
+    const key = this.keyBy(entity);
+    return this.alarmTrigger.get(key) !== undefined;
+  }
+
+  /**
+   * 刪除特定報警資料
+   *
+   * @method public
+   * @param entity 資料實體
+   */
+  public deleteAlarmEntity(entity: T): void {
+    const key = this.keyBy(entity);
+    const alarm = this.alarmTrigger.get(key);
+    if (alarm && alarm.level !== null) {
+      alarm.updateLevel(this.defaultLevel(entity));
+      this.alarmTrigger.delete(key);
+    }
+  }
+
+  /**
    * 初始化
    *
    * @method public
@@ -214,19 +254,6 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
    * @return 回傳等級 1 報警等級狀態
    */
   public abstract level1(entity: T): AlarmState;
-
-  /**
-   * 保存報警資料
-   *
-   * @method public
-   * @param entity 資料實體
-   */
-  public storeAlarmEntity(entity: T): void {
-    // 保存報警資料
-    const key = this.keyBy(entity);
-    const alarm = new Alarm(entity, this.defaultLevel(entity), this, key);
-    this.alarmTrigger.set(key, entity, alarm);
-  }
 
   /**
    * 打包報警發送數據

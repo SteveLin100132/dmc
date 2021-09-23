@@ -66,6 +66,28 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      */
     private getAlarmStateByLevel;
     /**
+     * 保存報警資料
+     *
+     * @method public
+     * @param entity 資料實體
+     */
+    storeAlarmEntity(entity: T): void;
+    /**
+     * 該報警資料是否存在
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳該報警資料是否存在
+     */
+    isAlarmEntityExist(entity: T): boolean;
+    /**
+     * 刪除特定報警資料
+     *
+     * @method public
+     * @param entity 資料實體
+     */
+    deleteAlarmEntity(entity: T): void;
+    /**
      * 初始化
      *
      * @method public
@@ -142,13 +164,6 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      * @return 回傳等級 1 報警等級狀態
      */
     abstract level1(entity: T): AlarmState;
-    /**
-     * 保存報警資料
-     *
-     * @method public
-     * @param entity 資料實體
-     */
-    storeAlarmEntity(entity: T): void;
     /**
      * 打包報警發送數據
      *

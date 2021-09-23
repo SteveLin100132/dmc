@@ -70,4 +70,11 @@ export declare abstract class AlarmTriggerStrategy<D = any> {
      * @return 回傳所有報警狀態管理者
      */
     getAll(): Map<string, Alarm<D>>;
+    /**
+     * 刪除特定鍵值得報警狀態管理者
+     *
+     * @method public
+     * @param key 報警狀態管理者鍵值
+     */
+    delete(key: string): void;
 }

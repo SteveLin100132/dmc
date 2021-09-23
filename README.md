@@ -594,6 +594,64 @@ const alarmService = new AlarmService('alarm');
 alarmService.execute().subscribe(res => console.log(res));
 ```
 
+#### storeAlarmEntity()
+
+保存報警資料
+
+| 參數   |    型別     | 說明     |
+| ------ | :---------: | :------- |
+| entity | &#60;T&#62; | 資料實體 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  ...
+}
+
+const alarmService = new AlarmService('alarm');
+alarmService.storeAlarmEntity(/** 要保存的資料 */)
+```
+
+#### isAlarmEntityExist()
+
+該報警資料是否存在
+
+| 參數   |    型別     | 說明                   |
+| ------ | :---------: | :--------------------- |
+| entity | &#60;T&#62; | 資料實體               |
+| Return |   boolean   | 回傳該報警資料是否存在 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  ...
+}
+
+const alarmService = new AlarmService('alarm');
+alarmService.isAlarmEntityExist(/** 要檢視的資料 */)
+```
+
+#### deleteAlarmEntity()
+
+刪除特定報警資料
+
+| 參數   |    型別     | 說明     |
+| ------ | :---------: | :------- |
+| entity | &#60;T&#62; | 資料實體 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  ...
+}
+
+const alarmService = new AlarmService('alarm');
+alarmService.deleteAlarmEntity(/** 要刪除的資料 */)
+```
+
 # Consumer API
 
 Consumer 物件作為介接報警獲取所需的資料來源，目前提供以下轉接器，若所需要的

@@ -93,4 +93,14 @@ export abstract class AlarmTriggerStrategy<D = any> {
   public getAll(): Map<string, Alarm<D>> {
     return this.alarm;
   }
+
+  /**
+   * 刪除特定鍵值得報警狀態管理者
+   *
+   * @method public
+   * @param key 報警狀態管理者鍵值
+   */
+  public delete(key: string): void {
+    this.alarm.delete(key);
+  }
 }
