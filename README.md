@@ -594,6 +594,45 @@ const alarmService = new AlarmService('alarm');
 alarmService.execute().subscribe(res => console.log(res));
 ```
 
+#### getAlarmEntity()
+
+取得特定鍵值的報警資料
+
+| 參數   |               型別               | 說明                   |
+| ------ | :------------------------------: | :--------------------- |
+| entity |           &#60;T&#62;            | 資料實體               |
+| Return | Alarm&#60;T&#62;&#124; undefined | 回傳特定鍵值的報警資料 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  ...
+}
+
+const alarmService = new AlarmService('alarm');
+const alarm = alarmService.getAlarmEntity(/** 要取得的資料 */)
+```
+
+#### getAllAlarmEntities()
+
+取得所有報警資料
+
+| 參數   |                 型別                  | 說明             |
+| ------ | :-----------------------------------: | :--------------- |
+| Return | Map&#60;string, Alarm&#60;T&#62;&#62; | 回傳所有報警資料 |
+
+```typescript
+import { AlarmTemplate } from 'wistroni40-dmc';
+
+class AlarmService extends AlarmTemplate {
+  ...
+}
+
+const alarmService = new AlarmService('alarm');
+const alarm = alarmService.getAllAlarmEntities()
+```
+
 #### storeAlarmEntity()
 
 保存報警資料

@@ -66,6 +66,21 @@ export declare abstract class AlarmTemplate<S = any, T = any, P = AlarmModel> im
      */
     private getAlarmStateByLevel;
     /**
+     * 取得特定鍵值的報警資料
+     *
+     * @method public
+     * @param entity 資料實體
+     * @return 回傳特定鍵值的報警資料
+     */
+    getAlarmEntity(entity: T): Alarm<T> | undefined;
+    /**
+     * 取得所有報警資料
+     *
+     * @method public
+     * @return 回傳所有報警資料
+     */
+    getAllAlarmEntities(): Map<string, Alarm<T>>;
+    /**
      * 保存報警資料
      *
      * @method public

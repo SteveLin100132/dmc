@@ -125,6 +125,28 @@ export abstract class AlarmTemplate<S = any, T = any, P = AlarmModel>
   }
 
   /**
+   * 取得特定鍵值的報警資料
+   *
+   * @method public
+   * @param entity 資料實體
+   * @return 回傳特定鍵值的報警資料
+   */
+  public getAlarmEntity(entity: T): Alarm<T> | undefined {
+    const key = this.keyBy(entity);
+    return this.alarmTrigger.get(key);
+  }
+
+  /**
+   * 取得所有報警資料
+   *
+   * @method public
+   * @return 回傳所有報警資料
+   */
+  public getAllAlarmEntities(): Map<string, Alarm<T>> {
+    return this.alarmTrigger.getAll();
+  }
+
+  /**
    * 保存報警資料
    *
    * @method public
