@@ -9,7 +9,7 @@
  * @NOTE
  */
 
-import { Client } from 'mqtt';
+import { Client, IClientPublishOptions } from 'mqtt';
 import { ProducerAdapter, PublishCallback } from './../../../core';
 
 /**
@@ -20,7 +20,11 @@ export class MqttProducerAdapter extends ProducerAdapter<Client, string> {
    * @param producer 資料生產者
    * @param topic    要上拋的主題
    */
-  constructor(protected producer: Client, protected topic: string) {
+  constructor(
+    protected producer: Client,
+    protected topic: string,
+    protected publishedOpts?: IClientPublishOptions,
+  ) {
     super(producer);
   }
 
@@ -32,10 +36,20 @@ export class MqttProducerAdapter extends ProducerAdapter<Client, string> {
    * @param cb      上拋回呼
    */
   public publish(message: string, cb?: PublishCallback): void {
-    this.producer.publish(this.topic, message, (error, packet) => {
-      if (cb) {
-        cb(error, packet);
-      }
-    });
+    const topic = this.topic;
+    const options = this.publishedOpts;
+    if (options) {
+      this.producer.publish(topic, message, options, (error, packet) => {
+        if (cb) {
+          cb(error, packet);
+        }
+      });
+    } else {
+      this.producer.publish(topic, message, (error, packet) => {
+        if (cb) {
+          cb(error, packet);
+        }
+      });
+    }
   }
 }

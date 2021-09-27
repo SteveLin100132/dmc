@@ -8,7 +8,7 @@
  * -----------------------------------------------------------------------------
  * @NOTE
  */
-import { Client } from 'mqtt';
+import { Client, IClientPublishOptions } from 'mqtt';
 import { ProducerAdapter, PublishCallback } from './../../../core';
 /**
  * MQTT 資料生產者轉接器
@@ -16,11 +16,12 @@ import { ProducerAdapter, PublishCallback } from './../../../core';
 export declare class MqttProducerAdapter extends ProducerAdapter<Client, string> {
     protected producer: Client;
     protected topic: string;
+    protected publishedOpts?: IClientPublishOptions | undefined;
     /**
      * @param producer 資料生產者
      * @param topic    要上拋的主題
      */
-    constructor(producer: Client, topic: string);
+    constructor(producer: Client, topic: string, publishedOpts?: IClientPublishOptions | undefined);
     /**
      * 上拋資料
      *
