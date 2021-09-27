@@ -10,3 +10,4 @@
  */
 
 export * from './kafka';
+export * from './mqtt';

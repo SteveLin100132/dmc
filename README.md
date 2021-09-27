@@ -41,6 +41,7 @@ npm i wistroni40-dmc --save
   - 建立 Producer 抽象類別，提供客製 Producer 轉接器
   - 建立 Kafka Producer 轉接器
   - 建立 HTTP Post 轉接器
+  - 建立 MQTT Producer 轉接器
 - Alarm
   - 建立抽象報警流程範本，只需繼承並實作(或覆寫)對應屬性及方法，即可發送報警
   - 建立抽象報警狀態物件，只需繼承並實作對應方法，即可讓報警自動升級或解除
