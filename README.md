@@ -42,6 +42,9 @@ npm i wistroni40-dmc --save
   - 建立 Kafka Producer 轉接器
   - 建立 HTTP Post 轉接器
   - 建立 MQTT Producer 轉接器
+- Initializer
+  - 建立抽象初始化程序，實作該類可將要監控的數據加入至報警資料當中，同時也可以定
+    期更新，去添加或移除不再監控範圍的資料
 - Alarm
   - 建立抽象報警流程範本，只需繼承並實作(或覆寫)對應屬性及方法，即可發送報警
   - 建立抽象報警狀態物件，只需繼承並實作對應方法，即可讓報警自動升級或解除
@@ -934,3 +937,8 @@ export class MqttConsumerAdapter extends ConsumerAdapter<
   }
 }
 ```
+
+# Initializer API
+
+初始化程序主要提供初始報警紀錄的載入，常見的使用情境是，當特定的資料要進行報警，
+非全部的資料要監控，

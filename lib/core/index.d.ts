@@ -12,6 +12,7 @@ export * from './alarm';
 export * from './builder';
 export * from './consumer';
 export * from './cron';
+export * from './initializer';
 export * from './logger';
 export * from './models';
 export * from './producer';
